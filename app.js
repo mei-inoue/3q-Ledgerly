@@ -8,7 +8,6 @@ var indexRouter = require('./routes/index');    // 収支一覧 & 追加
 var loginRouter = require('./routes/login');    // ログイン & 新規登録
 var editRouter = require('./routes/edit');      // 編集
 var deleteRouter = require('./routes/delete');  // 削除
-var graphRouter = require('./routes/graph');    // グラフ
 var detailRouter = require('./routes/detail');  // ★ 詳細表示
 
 var app = express();
@@ -30,7 +29,6 @@ app.use("/", indexRouter);          // POST "/" は必ず先頭付近で
 app.use("/detail", detailRouter);   // ★ 詳細ページ
 app.use("/edit", editRouter);
 app.use("/delete", deleteRouter);
-app.use("/graph", graphRouter);
 
 // ===== 404 handler =====
 app.use(function (req, res, next) {
