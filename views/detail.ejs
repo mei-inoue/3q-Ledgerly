@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>詳細</title>
+
+  <style>
+    body {
+      font-family: "Hiragino Sans", "Noto Sans JP", sans-serif;
+      padding: 25px;
+      background: #fafafa;
+    }
+    .box {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      max-width: 350px;
+      margin: 0 auto;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    h1 { text-align: center; margin-bottom: 20px; }
+    .label { font-weight: bold; margin-top: 12px; }
+
+    .edit-btn, .delete-btn, .back {
+      display: block;
+      margin-top: 15px;
+      text-align: center;
+      padding: 10px;
+      border-radius: 8px;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .edit-btn { background: #2A73FF; }
+    .delete-btn { background: #FF4D4D; }
+    .back { background: #aaa; margin-top: 25px; }
+  </style>
+</head>
+
+<body>
+  <div class="box">
+    <h1>詳細</h1>
+
+    <div class="label">日付</div>
+    <div><%= item.createdAt.toLocaleString("ja-JP") %></div>
+
+    <div class="label">項目</div>
+    <div><%= item.event %></div>
+
+    <div class="label">金額</div>
+    <div>¥<%= item.amount.toLocaleString() %></div>
+
+    <div class="label">区分</div>
+    <div><%= item.type === "Income" ? "収入" : "支出" %></div>
+
+    <div class="label">カテゴリ</div>
+    <div><%= item.category || "未設定" %></div>
+
+    <div class="label">メモ</div>
+    <div><%= item.memo || "なし" %></div>
+
+    <a href="/edit/<%= item.id %>" class="edit-btn">編集する</a>
+
+    <!-- 削除ボタン（安全版） -->
+    <a href="#" class="delete-btn" onclick="confirmDelete('<%= item.id %>')">削除する</a>
+
+    <a href="/" class="back">← 戻る</a>
+  </div>
+
+  <script>
+    function confirmDelete(id) {
+      if (confirm("本当に削除しますか？\nこの操作は元に戻せません。")) {
+        window.location.href = "/delete/" + id;
+      }
+    }
+  </script>
+</body>
+</html>

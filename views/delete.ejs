@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>削除確認</title>
+</head>
+<body>
+  <h1>削除確認</h1>
+
+  <p>以下の項目を削除しますか？<br>この操作は取り消せません。</p>
+
+  <table border="1">
+    <tr>
+      <th>項目名</th><td><%= item.event %></td>
+    </tr>
+    <tr>
+      <th>金額</th><td><%= item.amount %>円</td>
+    </tr>
+    <tr>
+      <th>区分</th><td><%= item.type %></td>
+    </tr>
+    <tr>
+      <th>日付</th><td><%= item.createdAt.toLocaleString("ja-JP") %></td>
+    </tr>
+  </table>
+
+  <br>
+
+  <form method="POST" action="/delete/<%= item.id %>">
+    <button type="submit">削除する</button>
+  </form>
+
+  <br>
+  <a href="/">戻る</a>
+</body>
+</html>

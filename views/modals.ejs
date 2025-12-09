@@ -1,0 +1,15 @@
+<!-- モーダル：追加 -->
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <h2>収支追加</h2>
+    <form action="/" method="POST">
+      <input type="text" name="event" required />
+      <input type="number" name="amount" required />
+      <select name="type" required>
+        <option value="Income">収入</option>
+        <option value="Expense">支出</option>
+      </select>
+      <button type="submit">追加</button>
+    </form>
+  </div>
+</div>

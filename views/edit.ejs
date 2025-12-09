@@ -1,0 +1,20 @@
+<h1>編集</h1>
+
+<form method="POST">
+  <label>項目名</label>
+  <input type="text" name="event" value="<%= item.event %>" required><br><br>
+
+  <label>金額</label>
+  <input type="number" name="amount" value="<%= item.amount %>" required><br><br>
+
+  <label>収支区分</label>
+  <select name="type" required>
+    <option value="Income" <%= item.type === "Income" ? "selected" : "" %>>収入</option>
+    <option value="Expense" <%= item.type === "Expense" ? "selected" : "" %>>支出</option>
+  </select><br><br>
+
+  <button type="submit">更新</button>
+</form>
+
+<br>
+<a href="/">戻る</a>
