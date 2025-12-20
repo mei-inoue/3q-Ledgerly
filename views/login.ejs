@@ -3,22 +3,120 @@
 <head>
   <meta charset="UTF-8">
   <title>ログイン</title>
+
+  <style>
+    body {
+      font-family: "Hiragino Sans","Noto Sans JP",sans-serif;
+      background: #f5f7fb;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .login-card {
+      background: #fff;
+      width: 360px;
+      padding: 32px;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    }
+
+    .login-card h1 {
+      text-align: center;
+      margin-bottom: 24px;
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .error {
+      color: #e53935;
+      background: #fdecea;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 12px;
+      font-size: 15px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      box-sizing: border-box;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: #2A73FF;
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 12px;
+      background: #2A73FF;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .login-btn:hover {
+      opacity: 0.9;
+    }
+
+    .register-link {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 14px;
+    }
+
+    .register-link a {
+      color: #2A73FF;
+      text-decoration: none;
+      font-weight: bold;
+    }
+  </style>
 </head>
 
 <body>
-  <h1>ログイン</h1>
+  <div class="container">
+    <div class="login-card">
+      <h1>ログイン</h1>
 
-  <% if (error) { %>
-    <p style="color:red;"><%= error %></p>
-  <% } %>
+      <% if (error) { %>
+        <div class="error"><%= error %></div>
+      <% } %>
 
-  <form action="/login" method="POST">
-    <input type="email" name="email" placeholder="メールアドレス" required><br><br>
-    <input type="password" name="password" placeholder="パスワード" required><br><br>
-    <button type="submit">ログイン</button>
-  </form>
+      <form action="/login" method="POST">
+        <div class="form-group">
+          <input type="email" name="email" placeholder="メールアドレス" required>
+        </div>
 
-  <br>
-  <a href="/login/register">新規登録はこちら</a>
+        <div class="form-group">
+          <input type="password" name="password" placeholder="パスワード" required>
+        </div>
+
+        <button type="submit" class="login-btn">ログイン</button>
+      </form>
+
+      <div class="register-link">
+        <a href="/login/register">新規登録はこちら</a>
+      </div>
+    </div>
+  </div>
 </body>
 </html>

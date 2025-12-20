@@ -5,51 +5,293 @@
   <title>収支一覧</title>
 
   <style>
-    body { font-family:"Hiragino Sans","Noto Sans JP",sans-serif; background:#fafafa; padding:20px; }
+    body {
+      font-family: "Hiragino Sans","Noto Sans JP",sans-serif;
+      background:#fafafa;
+      padding:20px;
+    }
     .title { font-size:24px; margin-bottom:20px; font-weight:bold; }
 
-    .balance-box { background:white; padding:16px; border-radius:12px; margin-bottom:25px;
-      border-left:6px solid #2A73FF; box-shadow:0 2px 6px rgba(0,0,0,.08);}
+    .balance-box {
+      background:white;
+      padding:16px;
+      border-radius:12px;
+      margin-bottom:25px;
+      border-left:6px solid #2A73FF;
+      box-shadow:0 2px 6px rgba(0,0,0,.08);
+    }
     .balance { font-size:28px; font-weight:bold; margin-bottom:8px; }
-    .summary span { display:inline-block; margin-right:10px; font-size:14px; opacity:.8;}
+    .summary span {
+      display:inline-block;
+      margin-right:10px;
+      font-size:14px;
+      opacity:.8;
+    }
 
-    .filter-container { text-align:center; margin:15px 0 20px;}
-    .filter-btn { padding:6px 14px; font-size:14px; margin:0 5px; border-radius:6px;
-      border:1px solid #007bff; background:white; cursor:pointer;}
-    .filter-btn:hover { background:#007bff; color:white;}
+    .filter-container { text-align:center; margin:15px 0 20px; }
+    .filter-btn {
+      padding:6px 14px;
+      font-size:14px;
+      margin:0 5px;
+      border-radius:6px;
+      border:1px solid #007bff;
+      background:white;
+      cursor:pointer;
+      text-decoration:none;
+      color:#007bff;
+    }
+    .filter-btn:hover { background:#007bff; color:white; }
 
-    .date-filter { text-align:center; margin-bottom: 15px; }
-    .date-filter input { padding:6px 10px; border-radius:6px; border:1px solid #ccc; }
-    .date-filter button { padding:6px 12px; border-radius:6px; border:1px solid #007bff; background:#007bff; color:white;}
+    .date-filter { text-align:center; margin-bottom:15px; }
+    .date-filter input {
+      padding:6px 10px;
+      border-radius:6px;
+      border:1px solid #ccc;
+    }
+    .date-filter button {
+      padding:6px 12px;
+      border-radius:6px;
+      border:1px solid #007bff;
+      background:#007bff;
+      color:white;
+    }
 
-    .timeline { border-left:3px solid #ccc; padding-left:15px; margin-bottom:40px; }
+    .timeline {
+      border-left:3px solid #ccc;
+      padding-left:15px;
+      margin-bottom:40px;
+    }
 
-    .item-card { background:white; border-radius:10px; padding:15px;
-      margin-bottom:10px; position:relative; border:1px solid #eee; cursor:pointer;}
-    .item-card.income { border-left:6px solid #2a73ff;}
-    .item-card.expense { border-left:6px solid #ff5b5b;}
+    .item-card {
+      background:white;
+      border-radius:10px;
+      padding:15px;
+      margin-bottom:10px;
+      position:relative;
+      border:1px solid #eee;
+      cursor:pointer;
+    }
+    .item-card.income { border-left:6px solid #2a73ff; }
+    .item-card.expense { border-left:6px solid #ff5b5b; }
 
     .amount { font-size:20px; font-weight:bold; margin-bottom:4px; }
-    .event { font-size:14px; color:#444;}
-    .tag { font-size:12px; opacity:.7; margin-top:3px;}
-    .category-label { font-size:13px; background:#e8e8e8; display:inline-block; padding:3px 8px; border-radius:6px; margin-top:6px;}
+    .event { font-size:14px; color:#444; }
+    .tag { font-size:12px; opacity:.7; margin-top:3px; }
+    .category-label {
+      font-size:13px;
+      background:#e8e8e8;
+      display:inline-block;
+      padding:3px 8px;
+      border-radius:6px;
+      margin-top:6px;
+    }
 
-    .actions { position:absolute; right:10px; top:10px;}
-    .btn-edit,.btn-delete { text-decoration:none; margin-left:8px; font-weight:bold; cursor:pointer;}
-    .btn-delete { color:red;}
+    .add-btn {
+      background:#007bff;
+      color:white;
+      padding:12px 18px;
+      border:none;
+      border-radius:8px;
+      font-size:16px;
+      width:200px;
+      display:block;
+      margin:20px auto;
+      cursor:pointer;
+    }
+    .logout {
+      display:inline-block;
+      margin-top:18px;
+      color:#007bff;
+      text-decoration:none;
+    }
 
-    .add-btn { background:#007bff; color:white; padding:12px 18px; border:none; border-radius:8px;
-      font-size:16px; width:200px; display:block; margin:20px auto; cursor:pointer;}
-    .logout { display:inline-block; margin-top:18px; color:#007bff; text-decoration:none; }
+    /* ===== モーダル背景 ===== */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.45);
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
 
-    .modal { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,.45);
-      justify-content:center; align-items:center;}
-    .modal-content { background:white; padding:25px; border-radius:12px; width:90%; max-width:300px; text-align:center;}
-    .modal-content input,.modal-content select,.modal-content button {
-      width:100%; padding:8px; margin-top:10px; border-radius:6px; border:1px solid #ccc;}
-    .save-btn { background:#007bff; color:white; border:none; cursor:pointer;}
-    .close-btn { background:#ccc; color:black; border:none; cursor:pointer;}
-    .delete-btn-modal { background:#ff4d4d; color:white; border:none; cursor:pointer;}
+    /* ===== モーダルカード ===== */
+    .modal-content {
+      background: white;
+      border-radius: 14px;
+      padding: 20px;
+      width: 90%;
+      max-width: 360px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.25);
+    }
+
+    .modal-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+
+    /* ★ 下に敷く四角いボックス */
+    .modal-form {
+      background: #f5f6f8;
+      border-radius: 12px;
+      padding: 16px;
+    }
+
+    .modal-form label {
+      font-size: 13px;
+      color: #555;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .modal-form input,
+    .modal-form select {
+      width: 100%;
+      padding: 10px 12px;
+      margin-bottom: 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+      background: white;
+    }
+
+    .modal-form input:focus,
+    .modal-form select:focus {
+      outline: none;
+      border-color: #007bff;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .save-btn {
+      flex: 1;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 10px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .close-btn {
+      flex: 1;
+      background: #e0e0e0;
+      color: #333;
+      border: none;
+      border-radius: 8px;
+      padding: 10px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    body {
+  font-family: "Hiragino Sans","Noto Sans JP",sans-serif;
+  background:#fafafa;
+  margin: 0;
+  padding: 20px;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* 横スクロール防止（Safari対策） */
+html, body {
+  overflow-x: hidden;
+}
+
+.balance-box,
+.item-card,
+.modal-content {
+  max-width: 100%;
+}
+
+    @media screen and (max-width: 480px) {
+
+    body {
+      padding: 12px;
+    }
+
+    .title {
+      font-size: 20px;
+      text-align: center;
+    }
+
+    .balance {
+      font-size: 22px;
+    }
+
+    .summary span {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 13px;
+    }
+
+    .date-filter {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .date-filter input,
+    .date-filter button {
+      width: 100%;
+      font-size: 14px;
+    }
+
+    .filter-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .filter-btn {
+      margin: 0;
+      font-size: 13px;
+      padding: 6px 12px;
+    }
+
+    .timeline {
+      padding-left: 10px;
+    }
+
+    .item-card {
+      padding: 12px;
+    }
+
+    .amount {
+      font-size: 18px;
+    }
+
+    .event {
+      font-size: 13px;
+    }
+
+    .category-label {
+      font-size: 12px;
+    }
+
+    .add-btn {
+      width: 100%;
+      font-size: 15px;
+    }
+
+    .modal-content {
+      width: 95%;
+      padding: 16px;
+    }
+  }
+</style>
   </style>
 </head>
 
@@ -64,63 +306,54 @@
     </div>
   </div>
 
-  <!-- 期間フィルタ -->
   <form class="date-filter" method="GET" action="/">
     <input type="date" name="start" value="<%= start || '' %>">
     <input type="date" name="end" value="<%= end || '' %>">
     <button type="submit">適用</button>
   </form>
 
-  <!-- 収支区分フィルタ -->
   <div class="filter-container">
-    <button class="filter-btn" onclick="filterItems('all')">すべて</button>
-    <button class="filter-btn" onclick="filterItems('Income')">収入のみ</button>
-    <button class="filter-btn" onclick="filterItems('Expense')">支出のみ</button>
+    <a class="filter-btn" href="/">すべて</a>
+    <a class="filter-btn" href="/?filter=Income">収入のみ</a>
+    <a class="filter-btn" href="/?filter=Expense">支出のみ</a>
   </div>
 
   <button id="openModal" class="add-btn">＋ 収支追加</button>
 
-  <% let lastDate="" %>
-  <div class="timeline">
-    <% items.forEach(item => { const date=item.createdAt.toLocaleDateString("ja-JP"); %>
+  <% let lastDate = "" %>
+<div class="timeline">
+  <% items.forEach(item => { 
+       const date = item.createdAt.toLocaleDateString("ja-JP"); 
+  %>
 
-      <% if(lastDate !== date){ %>
-        <div class="date-header"><%= date %></div>
-        <% lastDate = date %>
-      <% } %>
+    <% if (lastDate !== date) { %>
+      <div class="date-header"><%= date %></div>
+      <% lastDate = date %>
+    <% } %>
 
-      <div class="item-card <%= item.type==='Income'?'income':'expense' %>"
-           onclick="location.href='/detail?id=<%= item.id %>'">
+    <div class="item-card <%= item.type === 'Income' ? 'income' : 'expense' %>">
+      <div class="amount">¥<%= item.amount.toLocaleString() %></div>
+      <div class="event"><%= item.event %></div>
+      <div class="tag"><%= item.type === "Income" ? "収入" : "支出" %></div>
+      <div class="category-label">カテゴリ：<%= item.category || '未分類' %></div>
+    </div>
 
-        <div class="amount">¥<%= item.amount.toLocaleString() %></div>
-        <div class="event"><%= item.event %></div>
-        <div class="tag"><%= item.type==="Income"?"収入":"支出" %></div>
-        <div class="category-label">カテゴリ：<%= item.category %></div>
-
-        <div class="actions">
-          <span class="btn-edit" onclick="openEditModal('<%= item.id %>')">•••</span>
-          <span class="btn-delete" onclick="openDeleteModal('<%= item.id %>')">✕</span>
-        </div>
-      </div>
-    <% }) %>
-  </div>
-
-  <a href="/login/logout" class="logout">ログアウト</a>
+  <% }) %>
+</div>
 
   <%- include("modals") %>
 
-<script>
-  function filterItems(type){
-    const items=document.querySelectorAll(".item-card");
-    items.forEach(el=>{
-      const isIncome=el.classList.contains("income");
-      const isExpense=el.classList.contains("expense");
-      if(type==="Income" && !isIncome) el.style.display="none";
-      else if(type==="Expense" && !isExpense) el.style.display="none";
-      else el.style.display="block";
-    });
-  }
-</script>
+  <script>
+    const openBtn = document.getElementById("openModal");
+    const modal = document.getElementById("modal");
 
+    openBtn.addEventListener("click", () => {
+      modal.style.display = "flex";
+    });
+
+    function closeModal() {
+      modal.style.display = "none";
+    }
+  </script>
 </body>
 </html>

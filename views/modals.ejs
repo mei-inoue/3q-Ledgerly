@@ -1,15 +1,30 @@
-<!-- モーダル：追加 -->
 <div id="modal" class="modal">
   <div class="modal-content">
-    <h2>収支追加</h2>
-    <form action="/" method="POST">
-      <input type="text" name="event" required />
-      <input type="number" name="amount" required />
+    <h2 class="modal-title">収支追加</h2>
+
+    <form method="POST" action="/" class="modal-form">
+      <label>内容</label>
+      <input type="text" name="event" placeholder="例：コンビニ" required>
+
+      <label>金額</label>
+      <input type="number" name="amount" placeholder="例：500" required>
+
+      <label>区分</label>
       <select name="type" required>
         <option value="Income">収入</option>
         <option value="Expense">支出</option>
       </select>
-      <button type="submit">追加</button>
+
+      <label>カテゴリ</label>
+      <input type="text" name="category" placeholder="例：食費">
+
+      <label>メモ</label>
+      <input type="text" name="memo" placeholder="任意">
+
+      <div class="modal-actions">
+        <button type="button" class="close-btn" onclick="closeModal()">キャンセル</button>
+        <button type="submit" class="save-btn">追加</button>
+      </div>
     </form>
   </div>
 </div>
