@@ -292,7 +292,6 @@ html, body {
     }
   }
 </style>
-  </style>
 </head>
 
 <body>
@@ -320,7 +319,7 @@ html, body {
 
   <button id="openModal" class="add-btn">＋ 収支追加</button>
 
-  <% let lastDate = "" %>
+<% let lastDate = "" %>
 <div class="timeline">
   <% items.forEach(item => { 
        const date = item.createdAt.toLocaleDateString("ja-JP"); 
@@ -337,18 +336,12 @@ html, body {
       <div class="tag"><%= item.type === "Income" ? "収入" : "支出" %></div>
       <div class="category-label">カテゴリ：<%= item.category || '未分類' %></div>
 
-  <!-- 追加：削除リンク（確認ページへ） -->
-  <div style="margin-top:10px; text-align:right;">
-    <a href="/delete/<%= item.id %>" style="color:#ff5b5b; text-decoration:none; font-size:13px;">
-      削除
-    </a>
-  </div>
-</div>
-
+      <div class="item-actions">
+        <a href="/delete/<%= item.id %>" class="delete-link">削除</a>
+      </div>
     </div>
 
   <% }) %>
-</div>
 
   <%- include("modals") %>
 
