@@ -336,6 +336,22 @@ html, body {
       <div class="event"><%= item.event %></div>
       <div class="tag"><%= item.type === "Income" ? "収入" : "支出" %></div>
       <div class="category-label">カテゴリ：<%= item.category || '未分類' %></div>
+
+
+      <div class="item-card <%= item.type === 'Income' ? 'income' : 'expense' %>">
+      <div class="amount">¥<%= item.amount.toLocaleString() %></div>
+      <div class="event"><%= item.event %></div>
+      <div class="tag"><%= item.type === "Income" ? "収入" : "支出" %></div>
+      <div class="category-label">カテゴリ：<%= item.category || '未分類' %></div>
+
+  <!-- 追加：削除リンク（確認ページへ） -->
+  <div style="margin-top:10px; text-align:right;">
+    <a href="/delete/<%= item.id %>" style="color:#ff5b5b; text-decoration:none; font-size:13px;">
+      削除
+    </a>
+  </div>
+</div>
+
     </div>
 
   <% }) %>
