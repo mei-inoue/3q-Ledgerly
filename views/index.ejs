@@ -332,7 +332,6 @@ html, body {
     <% } %>
 
     <div class="item-card <%= item.type === 'Income' ? 'income' : 'expense' %>">
-      <div class="item-card <%= item.type === 'Income' ? 'income' : 'expense' %>">
       <div class="amount">¥<%= item.amount.toLocaleString() %></div>
       <div class="event"><%= item.event %></div>
       <div class="tag"><%= item.type === "Income" ? "収入" : "支出" %></div>
