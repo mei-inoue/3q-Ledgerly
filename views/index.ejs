@@ -336,15 +336,15 @@ html, body {
       <div class="tag"><%= item.type === "Income" ? "収入" : "支出" %></div>
       <div class="category-label">カテゴリ：<%= item.category || '未分類' %></div>
 
-      <div class="item-actions" style="margin-top: 12px; display: flex; gap: 15px;">
-    <a href="/edit/<%= item.id %>" style="color: #007bff; text-decoration: none; font-size: 14px; font-weight: bold;">
-      編集
-    </a>
-    
-    <a href="/delete-confirm/<%= item.id %>" style="color: #ff5b5b; text-decoration: none; font-size: 14px; font-weight: bold;">
-      削除
-    </a>
-  </div>
+     <div class="item-actions" style="margin-top: 12px; display: flex; gap: 15px;">
+  <a href="/edit/<%= item.id %>" style="color: #007bff; text-decoration: none; font-size: 14px; font-weight: bold;">
+    編集
+  </a>
+  
+  <a href="/delete/<%= item.id %>" style="color: #ff5b5b; text-decoration: none; font-size: 14px; font-weight: bold;">
+    削除
+  </a>
+</div>
     </div>
 
   <% }) %>
