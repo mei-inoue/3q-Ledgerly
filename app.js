@@ -23,12 +23,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// ===== routing order (重要) =====
+// ===== routing order (重要：順番を入れ替えました) =====
 app.use("/login", loginRouter);
-app.use("/", indexRouter);          // POST "/" は必ず先頭付近で
-app.use("/detail", detailRouter);   // ★ 詳細ページ
+app.use("/detail", detailRouter);
 app.use("/edit", editRouter);
-app.use("/delete", deleteRouter);
+app.use("/delete", deleteRouter); // indexRouter より上に配置
+app.use("/", indexRouter);          // "/" は最後に判定させる
 
 // ===== 404 handler =====
 app.use(function (req, res, next) {
